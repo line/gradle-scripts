@@ -82,7 +82,8 @@ sensible defaults. By applying them, you can:
            mavenCentral()
        }
        dependencies {
-           classpath "com.google.gradle:osdetector-gradle-plugin:1.4.0"
+           classpath 'com.google.gradle:osdetector-gradle-plugin:1.4.0'
+           classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
        }
    }
 
