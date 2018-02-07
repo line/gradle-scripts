@@ -64,7 +64,7 @@ rootProject.ext {
 }
 
 allprojects {
-    apply plugin: io.spring.gradle.dependencymanagement.DependencyManagementPlugin
+    apply plugin: 'io.spring.dependency-management'
 
     dependencyManagement {
         generatedPomCustomization {
