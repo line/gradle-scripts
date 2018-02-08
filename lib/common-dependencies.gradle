@@ -23,44 +23,6 @@ rootProject.ext {
     } else {
         dependenciesYaml = Collections.emptyMap()
     }
-
-    // Build the relocation table from dependencies.yml.
-    relocations = dependenciesYaml.entrySet().inject([]) { list, Map.Entry<String, Object> entry ->
-        if (entry.key != 'boms') {
-            def groupId = entry.key
-            entry.value.forEach { String artifactId, Map props ->
-                if (props.containsKey('relocations')) {
-                    props.get('relocations').each {
-                        list.add([
-                                name: "${groupId}:${artifactId}",
-                                from: it['from'],
-                                to: it['to']])
-                    }
-                }
-            }
-        }
-        return list
-    }
-
-    javadocLinks = dependenciesYaml.entrySet().inject([]) { list, Map.Entry<String, Object> entry ->
-        if (entry.key != 'boms') {
-            def groupId = entry.key
-            entry.value.forEach { String artifactId, Map props ->
-                def version = "${props['version']}"
-                if (props.containsKey('javadocs')) {
-                    props['javadocs'].each { url ->
-                        list.add([
-                                groupId: groupId,
-                                artifactId: artifactId,
-                                version: version,
-                                url: url
-                        ])
-                    }
-                }
-            }
-        }
-        return list
-    }
 }
 
 allprojects {
@@ -85,10 +47,12 @@ allprojects {
                     def groupId = key
                     def artifact = value as Map
                     artifact.forEach { String artifactId, Map props ->
-                        dependency("${groupId}:${artifactId}:${props['version']}") {
-                            if (props.containsKey('exclusions')) {
-                                props['exclusions'].each { String spec ->
-                                    exclude spec
+                        if (props.containsKey('version')) {
+                            dependency("${groupId}:${artifactId}:${props['version']}") {
+                                if (props.containsKey('exclusions')) {
+                                    props['exclusions'].each { String spec ->
+                                        exclude spec
+                                    }
                                 }
                             }
                         }
@@ -100,6 +64,46 @@ allprojects {
 
     ext {
         managedVersions = dependencyManagement.managedVersions
+    }
+}
+
+rootProject.ext {
+    // Build the relocation table from dependencies.yml.
+    relocations = dependenciesYaml.entrySet().inject([]) { list, Map.Entry<String, Object> entry ->
+        if (entry.key != 'boms') {
+            def groupId = entry.key
+            entry.value.forEach { String artifactId, Map props ->
+                if (props.containsKey('relocations')) {
+                    props.get('relocations').each {
+                        list.add([
+                                name: "${groupId}:${artifactId}",
+                                from: it['from'],
+                                to: it['to']])
+                    }
+                }
+            }
+        }
+        return list
+    }
+
+    javadocLinks = dependenciesYaml.entrySet().inject([]) { list, Map.Entry<String, Object> entry ->
+        if (entry.key != 'boms') {
+            def groupId = entry.key
+            entry.value.forEach { String artifactId, Map props ->
+                if (props.containsKey('javadocs')) {
+                    def version = String.valueOf(managedVersions["${groupId}:${artifactId}"])
+                    props['javadocs'].each { url ->
+                        list.add([
+                                groupId: groupId,
+                                artifactId: artifactId,
+                                version: version,
+                                url: url
+                        ])
+                    }
+                }
+            }
+        }
+        return list
     }
 }
 
