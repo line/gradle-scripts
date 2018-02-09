@@ -114,3 +114,16 @@ subprojects {
         javadocLinks = rootProject.ext.javadocLinks
     }
 }
+
+configure(rootProject) {
+    task managedVersions(
+            group: 'Build',
+            description: 'Generates the file that contains dependency versions.') {
+        inputs.properties dependencyManagement.managedVersions
+        doLast {
+            file("${project.buildDir}/managed_versions.yml").withWriter('UTF-8') {
+                new Yaml().dump(dependencyManagement.managedVersions, it)
+            }
+        }
+    }
+}
