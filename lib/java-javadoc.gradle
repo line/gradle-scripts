@@ -121,15 +121,16 @@ allprojects {
                     javadocUrl += '/'
                 }
 
-                if (!visitedUrls.add(javadocUrl)) {
-                    return
-                }
-
                 def javadocUrlSha1 = MessageDigest.getInstance('SHA1').digest(javadocUrl.getBytes('UTF-8')).encodeHex()
                 def tmpPackageListFile = new File(javadocCacheDir, "${name}/${javadocUrlSha1}/package-list.tmp")
                 def packageListFile = new File(javadocCacheDir, "${name}/${javadocUrlSha1}/package-list")
 
                 if ((!packageListFile.exists() || packageListFile.length() == 0) && !offlineJavadoc) {
+                    // Do not attempt to download more than once.
+                    if (!visitedUrls.add(javadocUrl)) {
+                        return
+                    }
+
                     packageListFile.parentFile.mkdirs()
                     packageListFile.delete()
                     def packageListUrl = new URL("${javadocUrl}package-list")
