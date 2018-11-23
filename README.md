@@ -278,11 +278,11 @@ configure(projectsWithFlags('java')) {
 }
 
 // Running a certain task after all Java projects are evaluated:
-afterProjectsWithFlag('java') {
-    println 'All Java projects have been evaluated.'
+afterProjectsWithFlag('java') { Set<Project> projects ->
+    println 'All Java projects have been evaluated: ${projects}'
 }
-afterProjectsWithFlags(['java', 'relocated']) {
-    println 'All Java projects with class relocation have been evaluated.'
+afterProjectsWithFlags(['java', 'relocated']) { Set<Project> projects ->
+    println 'All Java projects with class relocation have been evaluated: ${projects}'
 }
 ```
 
