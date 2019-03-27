@@ -183,7 +183,7 @@ allprojects {
                     if (line.startsWith(modulePrefix)) {
                         if (inModule) {
                             inModule = false;
-                            if (lines.size() != 0) {
+                            if (!lines.isEmpty()) {
                                 def javadocUrl = "${url}${currentModule}/"
                                 def javadocUrlSha1 = MessageDigest.getInstance('SHA1').digest(javadocUrl.getBytes('UTF-8')).encodeHex()
                                 def listFileDir = new File(javadocCacheDir, "${name}/${currentModule}/${javadocUrlSha1}")
