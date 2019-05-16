@@ -5,12 +5,22 @@ allprojects {
 }
 
 static boolean hasSourceDirectory(Project project, String name) {
-    return new File(project.projectDir, 'src').listFiles(new FileFilter() {
-        @Override
-        boolean accept(File pathname) {
-            return pathname.isDirectory()
+    def queue = [] as Queue<File>
+    queue.add(new File(project.projectDir, 'src'))
+    while (queue.size() > 0) {
+        def dir = queue.poll()
+        def children = dir.listFiles(new FileFilter() {
+            @Override
+            boolean accept(File pathname) {
+                return pathname.isDirectory()
+            }
+        })
+        for (child in children) {
+            if (child.getName() == "proto") {
+                return true
+            }
+            queue.add(child)
         }
-    }).find {
-        dir -> new File(dir, name).isDirectory()
-    } != null
+    }
+    return false
 }
