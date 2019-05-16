@@ -16,7 +16,7 @@ static boolean hasSourceDirectory(Project project, String name) {
             }
         })
         for (child in children) {
-            if (child.getName() == "proto") {
+            if (child.getName() == name) {
                 return true
             }
             queue.add(child)
