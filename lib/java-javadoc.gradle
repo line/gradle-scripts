@@ -68,7 +68,7 @@ allprojects {
                     "message": "This website uses anonymous cookies to ensure we provide you the best experience. ",
                     "link": "Opt out!",
                     "href": "https://tools.google.com/dlpage/gaoptout/",
-                    "target": '_blank\'
+                    "target": '_blank'
                   }
                 });
                 </script>''')
