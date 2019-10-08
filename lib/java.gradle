@@ -1,6 +1,6 @@
 // Enable checkstyle if the rule file exists.
 def checkstyleConfigDir = "${rootProject.projectDir}/settings/checkstyle"
-def checkstyleEnabled = !project.hasProperty('noCheckstyle') &&
+def checkstyleEnabled = !rootProject.hasProperty('noCheckstyle') &&
                         new File(checkstyleConfigDir).isDirectory() &&
                         new File("${checkstyleConfigDir}/checkstyle.xml").isFile()
 
