@@ -170,7 +170,7 @@ input, button {
   font-size: 87.5%;
 }
 
-input:focus {
+input:focus, button:focus {
   outline: none;
 }
 
@@ -478,8 +478,8 @@ section > ul.blockList:last-child {
   padding: 0 calc(var(--size-md) / 2) 0 0;
   flex-basis: min-content;
   flex-grow: 1;
-  text-indent: -2.385rem;
-  padding-left: 2.385rem;
+  text-indent: -2.06rem;
+  padding-left: 2.06rem;
 }
 
 *[class$="Summary"] > table > tbody > tr > .colFirst,
