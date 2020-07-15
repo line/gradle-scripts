@@ -186,6 +186,10 @@ body > main {
 }
 
 /* Navbars */
+a[id^="navbar.top"], a[id^="navbar.bottom"]{
+  display: none;
+}
+
 .navPadding {
   padding-top: calc(var(--navbar-height));
 }
@@ -206,9 +210,10 @@ body > main {
 
 .topNav, .bottomNav, .subNav {
   width: 100%;
-  height: var(--navbar-height);
+  min-height: var(--navbar-height);
   overflow: hidden;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0 var(--size-sm);
   margin: 0;
@@ -225,16 +230,17 @@ body > main {
 
 .subNav {
   background-color: var(--navbar-color-sub);
+  padding: var(--size-xs) calc(var(--size-lg) - var(--size-xs)) var(--size-xs) var(--size-lg);
 }
 
 .subNav > div:first-child {
   text-transform: uppercase;
+  flex-grow: 1;
 }
 
 ul.navList, ul.subNavList {
-  margin: 0;
   padding: 0;
-  display: inline-block;
+  display: inline;
 }
 
 ul.navList {
@@ -242,7 +248,7 @@ ul.navList {
 }
 
 ul.subNavList {
-  margin: 0 var(--size-sm);
+  margin: 0 var(--size-md) 0 0;
 }
 
 ul.navList li, ul.subNavList li {
@@ -252,31 +258,25 @@ ul.navList li, ul.subNavList li {
 }
 
 ul.navList li {
-  padding: calc((var(--navbar-height) - 1rem) / 2) var(--size-sm);
-}
-
-ul.subNavList li {
-  padding: 0;
+  padding: calc((var(--navbar-height) - var(--line-height)) / 2) var(--size-sm);
 }
 
 .navListSearch {
   display: flex;
-  align-items: center;
   flex-grow: 1;
-  justify-content: flex-end;
-  margin-left: var(--size-md);
+  align-items: center;
 }
 
 .navListSearch > label {
-  margin-right: var(--size-sm);
+  margin-right: 0.4rem;
 }
 
 #search {
   position: relative;
-  flex-grow: 1;
-  max-width: 50%;
   margin-right: calc(var(--size-sm) - 20px);
   padding: var(--size-xss) var(--size-xss) var(--size-xss) 20px;
+  flex-grow: 1;
+  max-width: min(100vw, 594px);
   border: var(--border);
   background-image: url('resources/glass.png');
   background-size: 13px;
