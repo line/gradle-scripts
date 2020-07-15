@@ -165,6 +165,11 @@ hr {
   margin: var(--size-md) 0;
 }
 
+input, button {
+  font-family: var(--font-family);
+  font-size: 87.5%;
+}
+
 input:focus {
   outline: none;
 }
