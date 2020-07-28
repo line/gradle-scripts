@@ -80,6 +80,9 @@ configure(projectsWithFlags('java')) {
                             if (project.ext.hasFlag('kotlin-grpc') && managedVersions.containsKey('io.grpc:grpc-kotlin-stub')) {
                                 kotlinGrpc {}
                             }
+                            if (project.ext.hasFlag('akka-grpc_2.12') && managedVersions.containsKey('com.lightbend.akka.grpc:akka-grpc-runtime_2.12')) {
+                                akkaGrpc {}
+                            }
                         }
                     }
 
