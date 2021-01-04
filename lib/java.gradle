@@ -46,7 +46,6 @@ configure(projectsWithFlags('java')) {
 
     // Set the sensible compiler options.
     tasks.withType(JavaCompile) {
-        def task = delegate
         sourceCompatibility = project.findProperty('javaSourceCompatibility') ?: '1.8'
         targetCompatibility = project.findProperty('javaTargetCompatibility') ?: '1.8'
         options.encoding = 'UTF-8'
