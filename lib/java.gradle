@@ -93,18 +93,11 @@ configure(projectsWithFlags('java')) {
             def dependencyTask = project.tasks.findByName("checkstyle${sourceSet.name.capitalize()}")
             if (dependencyTask instanceof Checkstyle) {
                 tasks.checkstyle.dependsOn dependencyTask
-
-                // Run checkstyle as soon as possible after compilation to get feedback earlier.
-                tasks.named(sourceSet.compileJavaTaskName).configure {
-                    finalizedBy dependencyTask
-                }
             }
         }
 
-        project.ext.getLintTask().dependsOn tasks.checkstyle
-
-        test {
-            dependsOn tasks.lint
-        }
+        def lintTask = project.ext.getLintTask()
+        lintTask.dependsOn tasks.checkstyle
+        tasks.check.dependsOn lintTask
     }
 }
