@@ -52,18 +52,6 @@ configure(projectsWithFlags('java')) {
         options.encoding = 'UTF-8'
         options.warnings = false
         options.compilerArgs += '-parameters'
-        project.configurations.each { Configuration cfg ->
-            if (cfg.name == 'annotationProcessor' || cfg.name.endsWith('AnnotationProcessor')) {
-                cfg.withDependencies { deps ->
-                    // Use incremental compilation only when there are no annotation processors,
-                    // because it seems to cause compilation errors for some processors such as Lombok.
-                    def useIncrementalCompilation = deps.size() == 0
-                    options.incremental = useIncrementalCompilation
-                    logger.info("${useIncrementalCompilation ? 'Enabling' : 'Disabling'} " +
-                            "incremental compilation for '${task.path}'")
-                }
-            }
-        }
     }
 
     // Enable full exception logging for test failures.
