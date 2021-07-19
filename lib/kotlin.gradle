@@ -15,7 +15,7 @@ configure(projectsWithFlags('kotlin')) {
 
     if (!rootProject.hasProperty('noLint')) {
         apply plugin: "org.jlleitschuh.gradle.ktlint"
-        
+
         ktlint {
             // https://github.com/pinterest/ktlint/issues/764
             version.set("0.36.0")
