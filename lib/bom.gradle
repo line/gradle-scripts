@@ -21,7 +21,9 @@ configure(projectsWithFlags('bom')) {
                 }
                 return "${a.ext.artifactId}".compareTo("${b.ext.artifactId}")
             }.each { p ->
-                api "${p.group}:${p.ext.artifactId}:${p.version}"
+                if (!project.flags.contains('sub') || project.parent.subprojects.contains(p)) {
+                    api "${p.group}:${p.ext.artifactId}:${p.version}"
+                }
             }
         }
     }
