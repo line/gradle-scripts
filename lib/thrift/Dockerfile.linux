@@ -46,7 +46,7 @@ RUN cd /tmp/thrift-${THRIFT_VERSION} && \
   make -j$(nproc) && \
   make install
 
-FROM ubuntu:focal
+FROM ubuntu:bionic
 
 COPY --from=builder /usr/local/bin/thrift /usr/local/bin/thrift
 
