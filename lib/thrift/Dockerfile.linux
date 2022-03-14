@@ -1,6 +1,6 @@
 # this builds a thrift binary without library support (only for code generation)
 # because Apache thrift official repo no longer maintain a binary distribution
-FROM ubuntu:focal as builder
+FROM ubuntu:bionic as builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
