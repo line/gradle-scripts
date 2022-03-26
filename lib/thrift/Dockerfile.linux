@@ -32,16 +32,7 @@ RUN cd /tmp/thrift-${THRIFT_VERSION} && \
   ./configure \
   --disable-debug \
   --disable-tests \
-  --without-erlang \
-  --without-haskell \
-  --without-java \
-  --without-perl \
-  --without-php \
-  --without-php_extension \
-  --without-python \
-  --without-py3 \
-  --without-ruby \
-  --without-swift \
+  --disable-libs \
   && \
   make -j$(nproc) && \
   make install
