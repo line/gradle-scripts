@@ -21,7 +21,28 @@ configure(projectsWithFlags('bom')) {
                 }
                 return "${a.ext.artifactId}".compareTo("${b.ext.artifactId}")
             }.each { p ->
-                api "${p.group}:${p.ext.artifactId}:${p.version}"
+                if (rootProject.ext.has('bomGroups')) {
+                    def bomGroups = rootProject.ext.bomGroups
+                    if (!(bomGroups instanceof Map)) {
+                        throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
+                    }
+
+                    for (Map.Entry<String, String> e : bomGroups.entrySet()) {
+                        if (rootProject.project(e.key) == project) {
+                            if (!(e.value instanceof List)) {
+                                throw new IllegalStateException("bomGroup's value is must be a List: ${e.value}")
+                            }
+
+                            for (String sub : e.value) {
+                                if (rootProject.project(sub) == p) {
+                                    api "${p.group}:${p.ext.artifactId}:${p.version}"
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    api "${p.group}:${p.ext.artifactId}:${p.version}"
+                }
             }
         }
     }
