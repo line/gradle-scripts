@@ -27,15 +27,19 @@ configure(projectsWithFlags('bom')) {
                         throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
                     }
 
-                    for (Map.Entry<String, List<String>> e : bomGroups.entrySet()) {
-                        if (rootProject.project(e.key) == project) {
-                            if (!(e.value instanceof List)) {
-                                throw new IllegalStateException("bomGroup's value must be a List: ${e.value}")
-                            }
+                    if (!bomGroups.containsKey(':' + project.name)) {
+                        api "${p.group}:${p.ext.artifactId}:${p.version}"
+                    } else {
+                        for (Map.Entry<String, List<String>> e : bomGroups.entrySet()) {
+                            if (rootProject.project(e.key) == project) {
+                                if (!(e.value instanceof List)) {
+                                    throw new IllegalStateException("bomGroup's value must be a List: ${e.value}")
+                                }
 
-                            for (String sub : e.value) {
-                                if (rootProject.project(sub) == p) {
-                                    api "${p.group}:${p.ext.artifactId}:${p.version}"
+                                for (String sub : e.value) {
+                                    if (rootProject.project(sub) == p) {
+                                        api "${p.group}:${p.ext.artifactId}:${p.version}"
+                                    }
                                 }
                             }
                         }
