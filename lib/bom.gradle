@@ -30,7 +30,7 @@ configure(projectsWithFlags('bom')) {
                     for (Map.Entry<String, String> e : bomGroups.entrySet()) {
                         if (rootProject.project(e.key) == project) {
                             if (!(e.value instanceof List)) {
-                                throw new IllegalStateException("bomGroup's value is must be a List: ${e.value}")
+                                throw new IllegalStateException("bomGroup's value must be a List: ${e.value}")
                             }
 
                             for (String sub : e.value) {
