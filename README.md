@@ -485,7 +485,9 @@ generate Maven BOM based on the dependencies specified in `dependencies.yml`.
 Maven repository by `./gradlew publish`.
 
 If you want to specify a subprojects, you can add `bomGroups` property. When generate
-Maven BOM of the project, only specific subprojects will be added into this bom file as dependency. 
+Maven BOM of the project, The specific subprojects will be added into this bom file as dependency.
+If you exclude a project from the `bomGroups` property, the generated bom file of that project will
+have subprojects as if you didn't use the `bomGroups` property.
 ```groovy
 ext {
     bomGroups = [
