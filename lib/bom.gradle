@@ -38,6 +38,7 @@ configure(projectsWithFlags('bom')) {
                         for (String sub : subs) {
                             if (rootProject.project(sub) == p) {
                                 api "${p.group}:${p.ext.artifactId}:${p.version}"
+                                break
                             }
                         }
                     }
