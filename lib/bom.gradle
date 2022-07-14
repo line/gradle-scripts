@@ -27,19 +27,16 @@ configure(projectsWithFlags('bom')) {
                         throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
                     }
 
-                    def moduleName = ':' + project.name
-                    if (!bomGroups.containsKey(moduleName)) {
+                    if (!bomGroups.containsKey(project.path)) {
                         api "${p.group}:${p.ext.artifactId}:${p.version}"
                     } else {
-                        def subs = bomGroups.get(moduleName)
+                        def subs = bomGroups.get(project.path)
                         if (!(subs.value instanceof List)) {
                             throw new IllegalStateException("bomGroups' value must be a List: ${subs.value}")
                         }
-                        for (String sub : subs) {
-                            if (rootProject.project(sub) == p) {
-                                api "${p.group}:${p.ext.artifactId}:${p.version}"
-                                break
-                            }
+
+                        if (subs.contains(p.path)) {
+                            api "${p.group}:${p.ext.artifactId}:${p.version}"
                         }
                     }
                 } else {
