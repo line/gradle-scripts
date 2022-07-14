@@ -484,10 +484,8 @@ generate Maven BOM based on the dependencies specified in `dependencies.yml`.
 `bom` flag implies `publish` flag, which means the BOM will be uploaded to a
 Maven repository by `./gradlew publish`.
 
-If you want to specify a subprojects, you can add `bomGroups` property. When generate
-Maven BOM of the project, The specific subprojects will be added into this bom file as dependency.
-If you exclude a project from the `bomGroups` property, the generated bom file of that project will
-have subprojects as if you didn't use the `bomGroups` property.
+If you want to publish multiple boms with different subprojects, you can use the `bomGroups` extension property.
+Specify each bom's name with the subprojects:
 ```groovy
 ext {
     bomGroups = [
