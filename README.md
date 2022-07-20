@@ -112,6 +112,7 @@ sensible defaults. By applying them, you can:
    publishUrlForSnapshot=https://oss.sonatype.org/content/repositories/snapshots/
    publishUsernameProperty=ossrhUsername
    publishPasswordProperty=ossrhPassword
+   publishSignatureRequired=true
    googleAnalyticsId=UA-XXXXXXXX
    javaSourceCompatibility=1.8
    javaTargetCompatibility=1.8
@@ -475,6 +476,18 @@ $ ./gradlew test -PbuildJdkVersion=15 -PtestJavaVersion=8
     myproject-foo.shortCommitHash=2efe73d5
     myproject-foo.version=0.0.1-SNAPSHOT
     ```
+
+- If [Gradle Nexus Publish Plugin](https://github.com/gradle-nexus/publish-plugin) is enabled in 
+ `<project_root>/build.gradle`, [staging function](https://help.sonatype.com/repomanager3/nexus-repository-administration/staging)
+  is used to publish the artifacts. It is great for publishing your open source to Sonatype, and then to Maven 
+  Central, in a fully automated fashion. 
+
+  ```groovy
+  // in build.gradle
+  plugins {
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+  }
+  ```
 
 ## Generating Maven BOM with `bom` flag
 
