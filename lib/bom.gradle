@@ -1,20 +1,18 @@
 configure(projectsWithFlags('bom')) {
     apply plugin: 'java-platform'
     apply plugin: 'maven-publish'
-}
 
-afterProjectsWithFlag('java') { Set<Project> projects ->
-    configure(projectsWithFlags('bom')) {
-        publishing {
-            publications {
-                bom(MavenPublication) {
-                    from components.javaPlatform
+    publishing {
+        publications {
+            bom(MavenPublication) {
+                from components.javaPlatform
 
-                    pom.packaging = 'pom'
-                }
+                pom.packaging = 'pom'
             }
         }
+    }
 
+    afterProjectsWithFlag('java') { Set<Project> projects ->
         dependencies {
             constraints {
                 projectsWithFlags('java', 'publish').toList().sort { a, b ->
@@ -28,9 +26,9 @@ afterProjectsWithFlag('java') { Set<Project> projects ->
                 }
             }
         }
+    }
 
-        tasks.assemble.dependsOn {
-            tasks.generatePomFileForBomPublication
-        }
+    tasks.assemble.dependsOn {
+        tasks.generatePomFileForBomPublication
     }
 }
