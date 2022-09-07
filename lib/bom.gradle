@@ -12,9 +12,9 @@ configure(projectsWithFlags('bom')) {
         }
     }
 
-    afterProjectsWithFlag('java') { Set<Project> projects ->
-        dependencies {
-            constraints {
+    dependencies {
+        constraints {
+            afterEvaluate {
                 projectsWithFlags('java', 'publish').toList().sort { a, b ->
                     def groupComparison = "${a.group}".compareTo("${b.group}")
                     if (groupComparison != 0) {
