@@ -26,6 +26,9 @@ configure(projectsWithFlags('bom')) {
                     isNeededCheck = true
                 }
                 subs = bomGroups.get(project.path)
+                if (!(subs.value instanceof List)) {
+                    throw new IllegalStateException("bomGroups' value must be a List: ${subs.value}")
+                }
             }
 
             projectsWithFlags('java', 'publish').toList().sort { a, b ->
@@ -39,10 +42,6 @@ configure(projectsWithFlags('bom')) {
                     if (!bomGroups.containsKey(project.path)) {
                         api "${p.group}:${p.ext.artifactId}:${p.version}"
                     } else {
-                        if (!(subs.value instanceof List)) {
-                            throw new IllegalStateException("bomGroups' value must be a List: ${subs.value}")
-                        }
-
                         if (subs.contains(p.path)) {
                             api "${p.group}:${p.ext.artifactId}:${p.version}"
                         } else if (p.path.startsWith(project.path)) {
