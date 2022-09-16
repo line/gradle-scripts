@@ -14,14 +14,18 @@ configure(projectsWithFlags('bom')) {
 
     dependencies {
         constraints {
-            def bomGroups = rootProject.ext.bomGroups
-            def isNeededCheck = false;
-            if (!(bomGroups instanceof Map)) {
-                throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
-            }
-            if (!bomGroups.containsKey(project.path)) {
-                logger.warn(project.name + " won't be included to bomGroups property")
-                isNeededCheck = true;
+            boolean isNeededCheck = false
+            def bomGroups, subs
+            if (rootProject.ext.has('bomGroups')) {
+                bomGroups = rootProject.ext.bomGroups
+                if (!(bomGroups instanceof Map)) {
+                    throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
+                }
+                if (!bomGroups.containsKey(project.path)) {
+                    logger.warn(project.name + " won't be included to bomGroups property")
+                    isNeededCheck = true;
+                }
+                subs = bomGroups.get(project.path)
             }
 
             projectsWithFlags('java', 'publish').toList().sort { a, b ->
@@ -35,7 +39,6 @@ configure(projectsWithFlags('bom')) {
                     if (!bomGroups.containsKey(project.path)) {
                         api "${p.group}:${p.ext.artifactId}:${p.version}"
                     } else {
-                        def subs = bomGroups.get(project.path)
                         if (!(subs.value instanceof List)) {
                             throw new IllegalStateException("bomGroups' value must be a List: ${subs.value}")
                         }
