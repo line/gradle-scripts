@@ -23,7 +23,7 @@ configure(projectsWithFlags('bom')) {
                 }
                 if (!bomGroups.containsKey(project.path)) {
                     logger.warn(project.name + " won't be included to bomGroups property")
-                    isNeededCheck = true;
+                    isNeededCheck = true
                 }
                 subs = bomGroups.get(project.path)
             }
@@ -47,7 +47,7 @@ configure(projectsWithFlags('bom')) {
                             api "${p.group}:${p.ext.artifactId}:${p.version}"
                         } else if (p.path.startsWith(project.path)) {
                             logger.warn(p.name + " won't be included in " + project.name + " bom")
-                            isNeededCheck = true;
+                            isNeededCheck = true
                         }
                     }
                 } else {
