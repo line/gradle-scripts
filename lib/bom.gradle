@@ -14,6 +14,16 @@ configure(projectsWithFlags('bom')) {
 
     dependencies {
         constraints {
+            def bomGroups = rootProject.ext.bomGroups
+            def isNeededCheck = false;
+            if (!(bomGroups instanceof Map)) {
+                throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
+            }
+            if (!bomGroups.containsKey(project.path)) {
+                logger.warn(project.name + " won't be included to bomGroups property")
+                isNeededCheck = true;
+            }
+
             projectsWithFlags('java', 'publish').toList().sort { a, b ->
                 def groupComparison = "${a.group}".compareTo("${b.group}")
                 if (groupComparison != 0) {
@@ -22,11 +32,6 @@ configure(projectsWithFlags('bom')) {
                 return "${a.ext.artifactId}".compareTo("${b.ext.artifactId}")
             }.each { p ->
                 if (rootProject.ext.has('bomGroups')) {
-                    def bomGroups = rootProject.ext.bomGroups
-                    if (!(bomGroups instanceof Map)) {
-                        throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
-                    }
-
                     if (!bomGroups.containsKey(project.path)) {
                         api "${p.group}:${p.ext.artifactId}:${p.version}"
                     } else {
@@ -37,11 +42,18 @@ configure(projectsWithFlags('bom')) {
 
                         if (subs.contains(p.path)) {
                             api "${p.group}:${p.ext.artifactId}:${p.version}"
+                        } else if (p.path.startsWith(project.path)) {
+                            logger.warn(p.name + " won't be included in " + project.name + " bom")
+                            isNeededCheck = true;
                         }
                     }
                 } else {
                     api "${p.group}:${p.ext.artifactId}:${p.version}"
                 }
+            }
+
+            if (isNeededCheck) {
+                logger.warn("If not intended, Please check bomGroups property")
             }
         }
     }
