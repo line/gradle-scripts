@@ -14,7 +14,6 @@ configure(projectsWithFlags('bom')) {
 
     dependencies {
         constraints {
-            boolean isNeededCheck = false
             def bomGroups, subs
             if (rootProject.ext.has('bomGroups')) {
                 bomGroups = rootProject.ext.bomGroups
@@ -22,8 +21,7 @@ configure(projectsWithFlags('bom')) {
                     throw new IllegalStateException("bomGroups must be a Map: ${bomGroups}")
                 }
                 if (!bomGroups.containsKey(project.path)) {
-                    logger.warn(project.name + " won't be included to bomGroups property")
-                    isNeededCheck = true
+                    logger.warn("{} won't be included to bomGroups property. If not intended, Please check bomGroups property", project.name)
                 }
                 subs = bomGroups.get(project.path)
                 if (!(subs.value instanceof List)) {
@@ -45,17 +43,12 @@ configure(projectsWithFlags('bom')) {
                         if (subs.contains(p.path)) {
                             api "${p.group}:${p.ext.artifactId}:${p.version}"
                         } else if (p.path.startsWith(project.path)) {
-                            logger.warn(p.name + " won't be included in " + project.name + " bom")
-                            isNeededCheck = true
+                            logger.warn("{} won't be included in {} bom. If not intended, Please check bomGroups property", p.name, project.name)
                         }
                     }
                 } else {
                     api "${p.group}:${p.ext.artifactId}:${p.version}"
                 }
-            }
-
-            if (isNeededCheck) {
-                logger.warn("If not intended, Please check bomGroups property")
             }
         }
     }
