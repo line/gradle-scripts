@@ -196,10 +196,10 @@ static def findLibrary(Project rootProject, String alias) {
     def catalog = catalogs.named("libs")
 
     def library = catalog.findLibrary(alias)
-    if (library.isEmpty()) {
-        return null
-    } else {
+    if (library.isPresent()) {
         return library.get()
+    } else {
+        return null
     }
 }
 
@@ -208,10 +208,10 @@ static def findPlugin(Project rootProject, String alias) {
     def catalog = catalogs.named("libs")
 
     def plugin = catalog.findPlugin(alias)
-    if (plugin.isEmpty()) {
-        return null
-    } else {
+    if (plugin.isPresent()) {
         return plugin.get()
+    } else {
+        return null
     }
 }
 
