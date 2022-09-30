@@ -6,7 +6,7 @@ FROM centos:centos7 as builder
 ENV DEBIAN_FRONTEND=noninteractive
 
 # see https://archive.apache.org/dist/thrift/
-ENV THRIFT_VERSION=0.16.0
+ENV THRIFT_VERSION=0.17.0
 
 # see https://thrift.apache.org/docs/install/centos.html
 RUN yum update -y -q && \
