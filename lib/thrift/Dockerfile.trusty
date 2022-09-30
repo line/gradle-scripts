@@ -5,7 +5,7 @@ FROM ubuntu:trusty as builder
 ENV DEBIAN_FRONTEND=noninteractive
 
 # see https://archive.apache.org/dist/thrift/
-ENV THRIFT_VERSION=0.16.0
+ENV THRIFT_VERSION=0.17.0
 
 # see https://thrift.apache.org/docs/install/debian.html
 RUN apt-get update -yq && \
