@@ -43,6 +43,9 @@ FROM centos:centos7
 
 COPY --from=builder /usr/local/bin/thrift /usr/local/bin/thrift
 
+# Minimizing Thrift binary size
+RUN strip /usr/local/bin/thrift
+
 ENTRYPOINT [ "/usr/local/bin/thrift" ]
 
 CMD [ "-help" ]
