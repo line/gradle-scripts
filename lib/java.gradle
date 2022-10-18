@@ -56,13 +56,16 @@ configure(projectsWithFlags('java')) {
     afterEvaluate {
         // Add the generated source directories to the source sets.
         // This should run in 'afterEvaluate' so that protobuf plugin which also adds
-        // generated files to java source set applied first.
+        // generated files to source set applied first.
         project.sourceSets.all { sourceSet ->
             def javaSrcDir = file("${project.ext.genSrcDir}/${sourceSet.name}/java")
+            def resourceSrcDir = file("${project.ext.genSrcDir}/${sourceSet.name}/resources")
             if (!sourceSet.java.srcDirs.contains(javaSrcDir)) {
                 sourceSet.java.srcDir javaSrcDir
             }
-            sourceSet.resources.srcDir file("${project.ext.genSrcDir}/${sourceSet.name}/resources")
+            if (!sourceSet.resources.srcDirs.contains(resourceSrcDir)) {
+                sourceSet.resources.srcDir resourceSrcDir
+            }
         }
         Task generateSourcesTask = project.tasks.findByName('generateSources')
         if (generateSourcesTask != null) {
