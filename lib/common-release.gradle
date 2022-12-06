@@ -29,7 +29,7 @@ task release(
             throw new InvalidUserDataException(
                     "invalid release version: ${releaseVersion} (expected: ${rootProject.ext.versionPattern})")
         }
-        if (!(nextVersion =~ rootProject.ext.versionPattern) || nextVersion.equalsIgnoreCase('skip')) {
+        if (!(nextVersion =~ rootProject.ext.versionPattern || nextVersion.equalsIgnoreCase('skip'))) {
             throw new InvalidUserDataException(
                     "invalid next version: ${nextVersion}" +
                             " (expected: ${rootProject.ext.versionPattern} or skip)")
