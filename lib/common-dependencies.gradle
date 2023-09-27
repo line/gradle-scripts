@@ -167,7 +167,7 @@ configure(projectsWithFlags('java')) {
     configurations.configureEach {
         ["Classpath", "AnnotationProcessor", "kapt"].each { name ->
             if (it.name.containsIgnoreCase(name)) {
-                it.extendsFrom(configurations.depedencyManagement)
+                it.extendsFrom(configurations.dependencyManagement)
             }
         }
     }
