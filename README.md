@@ -489,7 +489,7 @@ $ ./gradlew test -PbuildJdkVersion=15 -PtestJavaVersion=8
     useful build information:
 
     ```
-    myproject-foo.commitDate=2018-01-23 19\:14\:12 +0900
+    myproject-foo.commitDate=2018-01-23T19:14:12+09:00
     myproject-foo.repoStatus=dirty
     myproject-foo.longCommitHash=2efe73d595a4687c9f8ad3d153ca8fe52604e20f
     myproject-foo.shortCommitHash=2efe73d5
