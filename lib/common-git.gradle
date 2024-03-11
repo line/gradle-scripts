@@ -48,7 +48,8 @@ private def getRepoStatus() {
             version : project.version,
             longCommitHash : '0000000000000000000000000000000000000000',
             shortCommitHash : '0000000',
-            commitDate : '1970-01-01T00:00:00+00:00',
+            commitISODate : '1970-01-01T00:00:00+00:00',
+            commitDate : '1970-01-01 00:00:00 +0000',
             repoStatus : 'unknown'
     ]
 
@@ -64,13 +65,14 @@ private def getRepoStatus() {
 
     // Retrieve the repository status from the Git repository.
     try {
-        def gitLogOut = project.ext.executeGit('log', '-1', '--format=format:%h%x20%H%x20%cd', '--date=iso-strict', '--abbrev=9')
+        def gitLogOut = project.ext.executeGit('log', '-1', '--format=format:%h%x20%H%x20%cI%x20%ci', '--abbrev=9')
         if (gitLogOut) {
             logger.info("Latest commit: ${gitLogOut}")
             def tokens = gitLogOut.tokenize(' ')
             result.shortCommitHash = tokens[0]
             result.longCommitHash = tokens[1]
-            result.commitDate = tokens[2]
+            result.commitISODate = tokens[2]
+            result.commitDate = tokens[3..5].join(' ')
         }
 
         def gitStatusOut = project.ext.executeGit('status', '--porcelain')
