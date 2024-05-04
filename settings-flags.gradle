@@ -189,3 +189,4 @@ static void afterProjectsWithFlags(Project project, Iterable<?> flags, Closure<S
 // functionality.
 includeWithFlags ':dependencyManagement', 'dependencyManagement'
 project(':dependencyManagement').projectDir = file("${rootProject.projectDir}/build/dependencyManagement")
+project(':dependencyManagement').projectDir.mkdirs()
