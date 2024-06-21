@@ -368,7 +368,7 @@ private Configuration configureShadedTestImplementConfiguration(
                 }
                 // Do not use `project.dependencies.add(name, dep)` that discards the classifier of
                 // a dependency. See https://github.com/gradle/gradle/issues/23096
-                project.configurations.getByName(shadedJarTestImplementation.name).dependencies.add(dep)
+                shadedJarTestImplementation.dependencies.add(dep)
             }
         }
     }
@@ -376,7 +376,7 @@ private Configuration configureShadedTestImplementConfiguration(
     // Recurse into the project dependencies.
     projectDependencies.each { ProjectDependency dep ->
         if (!dep.dependencyProject.hasFlag('relocate')) {
-            project.configurations.getByName('shadedJarTestImplementation').dependencies.add(
+            shadedJarTestImplementation.dependencies.add(
                     project.dependencies.project(path: dep.dependencyProject.path))
             recursedProjectRelocated = false
         } else {
