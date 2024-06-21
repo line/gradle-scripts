@@ -375,11 +375,12 @@ private Configuration configureShadedTestImplementConfiguration(
 
     // Recurse into the project dependencies.
     projectDependencies.each { ProjectDependency dep ->
-        recursedProjectRelocated = true
         if (!dep.dependencyProject.hasFlag('relocate')) {
             project.configurations.getByName('shadedJarTestImplementation').dependencies.add(
                     project.dependencies.project(path: dep.dependencyProject.path))
             recursedProjectRelocated = false
+        } else {
+            recursedProjectRelocated = true
         }
         configureShadedTestImplementConfiguration(
                 project, dep.dependencyProject,
