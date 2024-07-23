@@ -45,6 +45,7 @@ allprojects {
             def overriddenArtifactId = findOverridden('artifactIdOverrides', project)
             if (overriddenArtifactId != null) {
                 return overriddenArtifactId
+            }
 
             // Generate from the project names otherwise.
             List<Project> chain = []
