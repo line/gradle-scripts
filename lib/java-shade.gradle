@@ -38,6 +38,14 @@ configure(relocatedProjects) {
         // Exclude the module metadata that'll become invalid after relocation.
         exclude '**/module-info.class'
 
+        def shadowExclusions = []
+        if (rootProject.hasProperty('shadowExclusions')) {
+            shadowExclusions = rootProject.findProperty('shadowExclusions').split(",")
+        }
+        shadowExclusions.each {
+            exclude it
+        }
+
         // Set the 'Automatic-Module-Name' property in MANIFEST.MF.
         if (project.ext.automaticModuleName != null) {
             manifest {
