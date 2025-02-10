@@ -52,11 +52,11 @@ sensible defaults. By applying them, you can:
    gradlew
    gradlew.bat
    ```
-2. Clone everything in this directory into `<project_root>/gradle/scripts`.
+2. Add this repository as submodule into `<project_root>/gradle/scripts`.
    If cloned correctly, you should see the following `ls` command output:
 
    ```
-   $ git clone https://github.com/line/gradle-scripts.git gradle/scripts
+   $ git submodule add https://github.com/line/gradle-scripts.git gradle/scripts
    $ ls gradle/scripts
    lib/
    build-flags.gradle
