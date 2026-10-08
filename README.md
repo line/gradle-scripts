@@ -110,7 +110,7 @@ sensible defaults. By applying them, you can:
    authorUrl=https://john.doe.com/
    inceptionYear=2018
    licenseName=The Apache License, Version 2.0
-   licenseUrl=https://www.apache.org/license/LICENSE-2.0.txt
+   licenseUrl=https://www.apache.org/licenses/LICENSE-2.0.txt
    scmUrl=https://github.com/john.doe/example
    scmConnection=scm:git:https://github.com/john.doe/example.git
    scmDeveloperConnection=scm:git:ssh://git@github.com/john.doe/example.git
