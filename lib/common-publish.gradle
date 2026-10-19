@@ -97,9 +97,11 @@ configure(projectsWithFlags('publish')) {
                         url publishUrlForSnapshot
                     }
 
-                    credentials {
-                        username = project.findProperty(publishUsernameProperty)
-                        password = project.findProperty(publishPasswordProperty)
+                    if (project.findProperty(publishUsernameProperty) != null) {
+                        credentials {
+                            username = project.findProperty(publishUsernameProperty)
+                            password = project.findProperty(publishPasswordProperty)
+                        }
                     }
                 }
             }
