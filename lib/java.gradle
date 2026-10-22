@@ -43,6 +43,9 @@ static def extractTargetJavaVersion(Project project) {
     return null
 }
 
+// Use one vendor throughout the build when ProGuard requires jmods.
+def requiresJmods = !projectsWithFlags('java', 'trim').isEmpty()
+
 configure(projectsWithFlags('java')) {
 
     apply plugin: 'java-library'
@@ -108,11 +111,9 @@ configure(projectsWithFlags('java')) {
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(rootProject.ext.buildJdkVersion)
-            // Use Azul JDKs because the default vendor 'temurin' no longer includes the jmods folder
-            // required by Proguard.
-            // - https://adoptium.net/fr/news/2025/03/eclipse-temurin-jdk24-JEP493-enabled
-            // - https://github.com/actions/runner-images/issues/13158
-            vendor = JvmVendorSpec.AZUL
+            if (requiresJmods) {
+                vendor = JvmVendorSpec.AZUL
+            }
             implementation = JvmImplementation.VENDOR_SPECIFIC
         }
     }
